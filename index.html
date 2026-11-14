@@ -95,9 +95,9 @@ h1,h2,h3{text-wrap:balance;margin:0}
 .feat{list-style:none;margin:0;padding:0;display:grid;gap:9px}
 .feat li{display:grid;grid-template-columns:14px minmax(0,1fr);gap:8px;align-items:baseline}
 .feat li::before{content:"";width:6px;height:6px;background:var(--accent);transform:translateY(-1px)}
-.stage{padding:22px;display:grid;gap:14px;min-width:0}
+.stage{padding:22px;display:grid;grid-template-columns:minmax(0,1fr);gap:14px;min-width:0}
 .stage-bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.seg{display:inline-flex;border:1px solid var(--line)}
+.seg{display:inline-flex;flex-wrap:wrap;max-width:100%;border:1px solid var(--line)}
 .seg button{padding:7px 12px;font-size:var(--s-0);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border-right:1px solid var(--line)}
 .seg button:last-child{border-right:0}
 .seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);font-weight:700}
@@ -149,8 +149,8 @@ h1,h2,h3{text-wrap:balance;margin:0}
 .hash code{max-width:20ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block}
 .copy{border:1px solid var(--line);padding:3px 8px;font-size:10px;letter-spacing:.1em;text-transform:uppercase}
 .copy:hover{border-color:var(--ink)}
-.notes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border:1px solid var(--line);border-top:0;background:var(--panel)}
-.note{padding:20px;border-right:1px solid var(--line)}
+.notes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;border:1px solid var(--line);border-top:0;background:var(--panel)}
+.note{padding:20px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}.note:nth-child(2n){border-right:0}.note:nth-last-child(-n+2){border-bottom:0}
 .note:last-child{border-right:0}
 .note h3{font-size:var(--s-1);letter-spacing:.12em;text-transform:uppercase;display:flex;gap:10px;align-items:center;margin-bottom:8px}
 .note p{margin:0;color:var(--muted);font-size:var(--s-0);line-height:1.7}
@@ -178,6 +178,9 @@ footer p{margin:0 0 6px;max-width:80ch}
   .slot{grid-template-columns:1fr}
   footer .wrap{grid-template-columns:1fr}
 }
+.rules{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:13px;line-height:1.45}
+.rules li{display:grid;grid-template-columns:26px 1fr;gap:6px}
+.rules li span{color:var(--accent);font-variant-numeric:tabular-nums}
 </style>
 </head>
 <body>
@@ -191,6 +194,7 @@ footer p{margin:0 0 6px;max-width:80ch}
     <nav class="nav" aria-label="Hauptnavigation">
       <a href="#vitals"><span>01</span>Vitals</a>
       <a href="#larynx"><span>02</span>LARYNX</a>
+      <a href="#digest"><span>03</span>DIGEST</a>
       <a class="keep" href="#download"><span>↓</span>Download</a>
     </nav>
     <button class="theme-btn" id="themeBtn" aria-label="Hell/Dunkel umschalten" title="Hell/Dunkel">
@@ -312,13 +316,58 @@ footer p{margin:0 0 6px;max-width:80ch}
     </div>
   </section>
 
-  <!-- ===================== 03 NEXT ===================== -->
+  <!-- ===================== 03 DIGEST ===================== -->
+  <section class="unit" id="digest" aria-labelledby="dg-title">
+    <div class="wrap">
+      <div class="unit-head">
+        <div class="unit-no" aria-hidden="true">03</div>
+        <div>
+          <div class="label"><b>Unit 03</b> · Download-Sortierer · <span style="color:var(--accent)">Beta</span></div>
+          <h2 class="unit-title" id="dg-title">DIGEST</h2>
+          <p class="unit-tag">Verdaut deinen Downloads-Ordner. Audio, Video, Bilder, Installer und Projekte landen in eigenen Ordnern, Duplikate erkennt DIGEST am Inhalt. Gelöscht wird nie etwas, jede Aktion lässt sich zurückdrehen.</p>
+        </div>
+        <a class="btn" href="#download" data-dl="digest">Download ↓</a>
+      </div>
+      <div class="unit-body">
+        <aside class="spec">
+          <table>
+            <tr><th>Version</th><td>0.9 Beta</td></tr>
+            <tr><th>Größe</th><td>1,0 MB</td></tr>
+            <tr><th>System</th><td>Windows 10/11 x64</td></tr>
+            <tr><th>Engine</th><td>Nativ C++, DirectX 11</td></tr>
+            <tr><th>Rechte</th><td>Keine Adminrechte</td></tr>
+            <tr><th>Kategorien</th><td>11, einzeln schaltbar</td></tr>
+            <tr><th>Duplikate</th><td>SHA-256, Byte für Byte</td></tr>
+            <tr><th>Leerlauf</th><td>~0 % CPU</td></tr>
+          </table>
+          <div>
+            <div class="label" style="margin-bottom:10px"><b>Sicherheit</b> · fest eingebaut</div>
+            <ol class="rules" id="rules"></ol>
+          </div>
+        </aside>
+        <div class="stage">
+          <div class="stage-bar">
+            <div class="seg" role="group" aria-label="Ansicht" id="dViews">
+              <button data-v="sort" aria-pressed="true">Sortieren</button>
+              <button data-v="dupes" aria-pressed="false">Duplikate</button>
+              <button data-v="big" aria-pressed="false">Platzfresser</button>
+              <button data-v="light" aria-pressed="false">Hell</button>
+            </div>
+          </div>
+          <div class="shot" style="aspect-ratio:1240/820"><img id="dShot" src="img/digest-sort.jpg" alt="DIGEST, Tab Sortieren, dunkel" width="1240" height="820"></div>
+          <div class="caption" id="dCap">Vorschau zuerst: Du siehst jede Datei und ihren Zielordner, bevor irgendwas bewegt wird.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 04 NEXT ===================== -->
   <section class="unit" aria-label="Nächstes Tool">
     <div class="wrap">
       <div class="slot">
-        <div class="unit-no" aria-hidden="true">03</div>
+        <div class="unit-no" aria-hidden="true">04</div>
         <div>
-          <div class="label"><b>Unit 03</b> · In Arbeit</div>
+          <div class="label"><b>Unit 04</b> · In Arbeit</div>
           <h2 class="unit-title" style="font-size:clamp(32px,4vw,48px)">NÄCHSTES TOOL</h2>
           <p>Hier landet das nächste Teil der Reihe. Jedes neue Tool bekommt seine Nummer, sein Datenblatt und einen Eintrag in der Download-Liste.</p>
         </div>
@@ -340,6 +389,7 @@ footer p{margin:0 0 6px;max-width:80ch}
         <div class="note"><h3><span class="sq"></span>SmartScreen</h3><p>Die Installer sind nicht digital signiert. Windows warnt deshalb beim ersten Start: „Weitere Informationen“ → „Trotzdem ausführen“. Mit dem SHA-256-Wert oben kannst du prüfen, ob die Datei unverändert ist.</p></div>
         <div class="note"><h3><span class="sq"></span>VITALS</h3><p>Startet mit Adminrechten, sonst gibt Windows keine CPU-Temperaturen raus. Der Installer bietet den signierten PawnIO-Treiber an: für CPU-, Mainboard-Temps und Lüfter mit „Ja“ bestätigen.</p></div>
         <div class="note"><h3><span class="sq"></span>LARYNX</h3><p>Leitet deine bearbeitete Stimme an Discord, OBS &amp; Co. weiter. In der App führt „Discord einrichten“ durch die Einstellung, mit „Bypass“ hörst du jederzeit den Vorher-Nachher-Vergleich. Ersetzt SixtyVox: Die alte Version wird beim Installieren entfernt, deine Presets ziehen mit um.</p></div>
+        <div class="note"><h3><span class="sq"></span>DIGEST</h3><p>Startet mit deinem Downloads-Ordner und zeigt erst nur eine Vorschau. Doppelte Dateien wandern in einen Quarantäne-Ordner, nicht in den Papierkorb. Alles, was DIGEST verschiebt, kannst du unter VERLAUF wieder an den alten Platz holen.</p></div>
       </div>
     </div>
   </section>
@@ -349,7 +399,7 @@ footer p{margin:0 0 6px;max-width:80ch}
   <div class="wrap">
     <div>
       <p>KLTZ/LAB · Tools für Windows · Kostenlos</p>
-      <p>Drittanbieter: LibreHardwareMonitor (MPL-2.0), PawnIO, Electron (MIT) in VITALS · RNNoise (BSD-3-Clause), Dear ImGui (MIT), Schriften JetBrains Mono und Doto (SIL OFL 1.1) in LARYNX.</p>
+      <p>Drittanbieter: LibreHardwareMonitor (MPL-2.0), PawnIO, Electron (MIT) in VITALS · RNNoise (BSD-3-Clause), Dear ImGui (MIT), Schriften JetBrains Mono und Doto (SIL OFL 1.1) in LARYNX und DIGEST · DejaVu-Pfeile (Bitstream-Vera-Lizenz) in DIGEST.</p>
     </div>
     <div class="label" id="year"></div>
   </div>
@@ -367,7 +417,9 @@ const TOOLS = [
     file: 'VITALS-Setup-1.1.0.exe', size: 125724462, sha256: '4c0011c40ab5b786c9bb1da3f866c6fd7b4e176be954a5e8211b397fbf5f3c03' },
   { id: 'larynx', no: '02', name: 'LARYNX', what: 'Stimm-Effektkette', status: 'beta', version: '0.9.5 Beta', tag: 'larynx-v0.9.5',
     file: 'LARYNX-0.9.5-Beta-Setup.exe', size: 916010, sha256: '58cd315396ce38bbc7ed0d3b2457ad278b1926ee226524487d4ec3d4d61e3116' },
-  { id: null, no: '03', name: 'NÄCHSTES TOOL', what: 'In Arbeit', status: 'wip' },
+  { id: 'digest', no: '03', name: 'DIGEST', what: 'Download-Sortierer', status: 'beta', version: '0.9 Beta', tag: 'digest-v0.9',
+    file: 'DIGEST-0.9-Beta-Setup.exe', size: 1030805, sha256: '9a56ee2790f46e127aef74e416b2a97e042025cbe2cb6cfa01ffe1b2436e005d' },
+  { id: null, no: '04', name: 'NÄCHSTES TOOL', what: 'In Arbeit', status: 'wip' },
 ];
 
 const $ = (s, r = document) => r.querySelector(s);
@@ -425,6 +477,28 @@ $('#lViews').addEventListener('click', e => { const b = e.target.closest('button
   $('#lShot').src = `img/larynx-${b.dataset.v}.jpg`; $('#lShot').alt = L_ALT[b.dataset.v];
   document.querySelectorAll('#lViews button').forEach(x => x.setAttribute('aria-pressed', x === b)); });
 for (const v of Object.keys(L_ALT)) { const i = new Image(); i.src = `img/larynx-${v}.jpg`; }
+
+
+// DIGEST screenshots + safety rules (texts from the app)
+const D_VIEW = {
+  sort: ['DIGEST, Tab Sortieren, dunkel', 'Vorschau zuerst: Du siehst jede Datei und ihren Zielordner, bevor irgendwas bewegt wird.'],
+  dupes: ['DIGEST, Tab Duplikate', 'Nur wirklich identische Dateien zählen. Das Original bleibt, die Kopie geht in die Quarantäne.'],
+  big: ['DIGEST, Tab Platzfresser', 'Die größten Dateien, auch in Unterordnern. DIGEST zeigt sie nur, entscheiden tust du.'],
+  light: ['DIGEST, Tab Sortieren, hell', 'Hell und Dunkel, wie alle Units der Reihe.'],
+};
+$('#dViews').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return;
+  const v = b.dataset.v; $('#dShot').src = `img/digest-${v}.jpg`; $('#dShot').alt = D_VIEW[v][0]; $('#dCap').textContent = D_VIEW[v][1];
+  document.querySelectorAll('#dViews button').forEach(x => x.setAttribute('aria-pressed', x === b)); });
+for (const v of Object.keys(D_VIEW)) { const i = new Image(); i.src = `img/digest-${v}.jpg`; }
+$('#rules').innerHTML = [
+  'Löscht nie. Dateien werden nur verschoben.',
+  'Überschreibt nie. Gleicher Name → „Name (2)“.',
+  'Jede Aktion steht im Verlauf und lässt sich rückgängig machen.',
+  'Duplikate nur bei identischem Inhalt (SHA-256). Das Original bleibt.',
+  'Laufende Downloads, leere Platzhalter und versteckte Dateien bleiben liegen.',
+  'Unterordner und unbekannte Dateitypen werden nie angefasst.',
+  'System- und Programmordner, Laufwerke und der Benutzerordner sind gesperrt.',
+].map((r, i) => `<li><span>${String(i + 1).padStart(2, '0')}</span>${r}</li>`).join('');
 
 // LARYNX chain — names, order and texts taken from the app
 const MODS = [
