@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KLTZ/LAB Tools</title>
+<meta name="description" content="KLTZ/LAB – kleine Windows-Tools: VITALS Hardware-Monitor und LARYNX Stimm-Effektkette für Discord. Kostenlos zum Download.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Doto:wght@600;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* layout idea: a product-catalogue sheet on a measured grid — every tool is a numbered unit with a spec table, the brand speaks only through the oversized dot-matrix type and one orange */
+:root{
+  --paper:#e9e8e3; --panel:#efeee9; --ink:#141414; --muted:#6f6d66; --line:#c9c6be; --accent:#ff5a1f; --accent-ink:#141414;
+  --f-display:'Doto','JetBrains Mono',ui-monospace,monospace;
+  --f-body:'JetBrains Mono',ui-monospace,'Cascadia Mono',Consolas,monospace;
+  --s-0:11px; --s-1:13px; --s-2:15px; --s-3:20px; --s-4:32px;
+  --gutter:clamp(16px,3vw,32px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--paper:#111111;--panel:#161616;--ink:#ecebe6;--muted:#8d8b84;--line:#2b2a28;--accent:#ff5a1f;--accent-ink:#111;color-scheme:dark}
+}
+:root[data-theme="dark"]{--paper:#111111;--panel:#161616;--ink:#ecebe6;--muted:#8d8b84;--line:#2b2a28;--accent:#ff5a1f;--accent-ink:#111;color-scheme:dark}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:var(--s-1);line-height:1.55;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:72px 72px;background-position:-1px -1px}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h1,h2,h3{text-wrap:balance;margin:0}
+.wrap{max-width:1280px;margin:0 auto;padding:0 var(--gutter)}
+.sq{display:inline-block;width:8px;height:8px;background:var(--accent);flex:none}
+.label{font-size:var(--s-0);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.label b{color:var(--ink);font-weight:700}
+.sheet{background:var(--panel);border:1px solid var(--line)}
+
+/* ---------- top bar ---------- */
+.top{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:24px;height:56px}
+.mark{display:flex;align-items:center;gap:10px;text-decoration:none}
+.mark-face{width:28px;height:28px;border-radius:7px;background:var(--ink);box-shadow:inset 0 0 0 3px var(--accent);display:flex;align-items:center;justify-content:center;gap:5px}
+.mark-face i{width:5px;height:5px;background:var(--paper);border-radius:1px}
+.mark-name{font-weight:700;letter-spacing:.14em;font-size:var(--s-1)}
+.nav{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+.nav a{text-decoration:none;font-size:var(--s-0);letter-spacing:.12em;text-transform:uppercase;padding:6px 10px;color:var(--muted)}
+.nav a:hover{color:var(--ink);box-shadow:inset 0 -2px 0 var(--accent)}
+.nav a span{color:var(--accent);margin-right:6px}
+.theme-btn{width:32px;height:32px;border:1px solid var(--line);display:grid;place-items:center}
+.theme-btn svg{width:15px;height:15px;fill:var(--ink)}
+
+/* ---------- hero ---------- */
+.hero{padding:28px 0 0;border-bottom:1px solid var(--line);overflow:hidden}
+.hero-type{font-family:var(--f-display);font-weight:900;font-size:clamp(64px,15.5vw,228px);line-height:.86;letter-spacing:.01em;white-space:nowrap;margin:0 0 0 calc(var(--gutter) * -0.2)}
+.hero-type .slash{color:var(--accent)}
+.hero-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);border-top:1px solid var(--line);margin-top:22px}
+.hero-copy{padding:24px 28px 28px 0;border-right:1px solid var(--line);display:grid;gap:18px;align-content:start}
+.hero-copy p{margin:0;font-size:var(--s-2);max-width:42ch}
+.hero-copy .label{display:flex;gap:10px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:var(--accent-ink);text-decoration:none;font-weight:700;font-size:var(--s-0);letter-spacing:.14em;text-transform:uppercase;padding:12px 20px;clip-path:polygon(0 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%);transition:filter .15s}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:var(--ink);color:var(--paper)}
+.btn[aria-disabled="true"]{background:var(--line);color:var(--muted);pointer-events:none}
+.index{list-style:none;margin:0;padding:0}
+.index li{border-bottom:1px solid var(--line)}
+.index li:last-child{border-bottom:0}
+.index a{display:grid;grid-template-columns:64px minmax(0,1fr) auto 24px;gap:18px;align-items:center;padding:18px 0 18px 24px;text-decoration:none;transition:background .15s}
+.index a:hover{background:var(--panel)}
+.idx-no{font-family:var(--f-display);font-weight:900;font-size:40px;line-height:1;color:var(--muted)}
+.index a:hover .idx-no{color:var(--accent)}
+.idx-name{font-weight:700;font-size:var(--s-3);letter-spacing:.06em}
+.idx-what{color:var(--muted);font-size:var(--s-0);letter-spacing:.06em;text-transform:uppercase;margin-top:2px}
+.chip{font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:3px 8px;border:1px solid var(--ink);white-space:nowrap}
+.chip.stable{background:var(--ink);color:var(--paper)}
+.chip.beta{border-color:var(--accent);color:var(--accent)}
+.chip.wip{border-style:dashed;color:var(--muted);border-color:var(--muted)}
+.idx-arrow{font-size:18px;color:var(--muted)}
+
+/* ---------- product sections ---------- */
+.unit{border-bottom:1px solid var(--line);padding:56px 0}
+.unit-head{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:24px;align-items:end;margin-bottom:28px}
+.unit-no{font-family:var(--f-display);font-weight:900;font-size:clamp(72px,10vw,132px);line-height:.8;color:var(--accent)}
+.unit-title{margin-top:10px;font-family:var(--f-display);font-weight:900;font-size:clamp(40px,6vw,76px);line-height:.9;letter-spacing:.02em}
+.unit-tag{font-size:var(--s-2);color:var(--muted);margin-top:10px;max-width:56ch}
+.unit-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:0;border:1px solid var(--line);background:var(--panel)}
+.spec{border-right:1px solid var(--line);padding:22px;display:grid;gap:22px;align-content:start}
+.spec table{width:100%;border-collapse:collapse;font-size:var(--s-0)}
+.spec th{text-align:left;font-weight:400;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;padding:7px 0;border-bottom:1px dashed var(--line);vertical-align:top;width:42%}
+.spec td{padding:7px 0;border-bottom:1px dashed var(--line);font-weight:500;font-variant-numeric:tabular-nums}
+.spec tr:last-child th,.spec tr:last-child td{border-bottom:0}
+.feat{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.feat li{display:grid;grid-template-columns:14px minmax(0,1fr);gap:8px;align-items:baseline}
+.feat li::before{content:"";width:6px;height:6px;background:var(--accent);transform:translateY(-1px)}
+.stage{padding:22px;display:grid;gap:14px;min-width:0}
+.stage-bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.seg{display:inline-flex;border:1px solid var(--line)}
+.seg button{padding:7px 12px;font-size:var(--s-0);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border-right:1px solid var(--line)}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);font-weight:700}
+.shot{border:1px solid var(--line);background:#000;aspect-ratio:1320/860;overflow:hidden}
+.shot img{width:100%;height:100%;object-fit:cover;object-position:top}
+.caption{font-size:var(--s-0);color:var(--muted);letter-spacing:.06em}
+
+/* sixtyvox signal chain */
+.chain{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.mod{position:relative;border:1px solid var(--line);background:var(--paper);padding:12px 10px 10px;text-align:left;display:grid;gap:10px;min-height:96px;transition:border-color .15s,transform .15s}
+.mod:hover{border-color:var(--ink)}
+.mod[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.mod-no{font-size:10px;color:var(--muted);letter-spacing:.1em}
+.mod-name{font-weight:700;font-size:var(--s-0);letter-spacing:.08em;text-transform:uppercase;line-height:1.25;word-break:break-word}
+.led{position:absolute;top:10px;right:10px;width:7px;height:7px;border-radius:50%;background:var(--line)}
+.mod[aria-pressed="true"] .led{background:var(--accent);box-shadow:0 0 8px var(--accent)}
+.mod .knob{width:28px;height:28px;border-radius:50%;border:2px solid var(--ink);position:relative;margin-top:auto}
+.mod .knob::after{content:"";position:absolute;left:50%;top:2px;width:2px;height:9px;margin-left:-1px;background:var(--ink);transform-origin:50% 11px;transform:rotate(var(--r,0deg))}
+.mod[aria-pressed="true"] .knob{border-color:var(--accent)}
+.mod[aria-pressed="true"] .knob::after{background:var(--accent)}
+.flow{display:flex;justify-content:space-between;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.flow span{display:flex;align-items:center;gap:8px}
+.detail{border:1px solid var(--line);background:var(--paper);padding:18px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:20px;min-height:180px}
+.detail h3{font-family:var(--f-display);font-weight:900;font-size:34px;line-height:1}
+.detail p{margin:10px 0 0;font-size:var(--s-1)}
+.params{list-style:none;margin:0;padding:0;display:grid;gap:8px;align-content:start}
+.params li{display:grid;grid-template-columns:92px minmax(0,1fr);gap:12px;font-size:var(--s-0);border-bottom:1px dashed var(--line);padding-bottom:7px}
+.params li:last-child{border-bottom:0}
+.params b{letter-spacing:.08em;text-transform:uppercase}
+.params span{color:var(--muted)}
+.presets{display:flex;flex-wrap:wrap;gap:6px}
+.presets span{font-size:var(--s-0);padding:4px 9px;border:1px solid var(--line);background:var(--paper)}
+.presets span.hl{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+
+/* next slot */
+.slot{border:1px dashed var(--muted);padding:34px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:28px;align-items:center;background:repeating-linear-gradient(135deg,transparent 0 14px,var(--panel) 14px 15px)}
+.slot .unit-no{color:var(--muted)}
+.slot p{margin:8px 0 0;max-width:60ch;color:var(--muted)}
+
+/* downloads */
+.dl{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line)}
+.dl-wrap{overflow-x:auto}
+.dl th{text-align:left;font-weight:400;font-size:var(--s-0);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:12px 16px;border-bottom:1px solid var(--line)}
+.dl td{padding:16px;border-bottom:1px solid var(--line);vertical-align:middle;font-variant-numeric:tabular-nums}
+.dl tr:last-child td{border-bottom:0}
+.dl .nm{font-weight:700;letter-spacing:.06em;white-space:nowrap}
+.dl .nm small{display:block;font-weight:400;color:var(--muted);letter-spacing:.04em}
+.hash{display:flex;gap:8px;align-items:center;font-size:var(--s-0);color:var(--muted)}
+.hash code{max-width:20ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block}
+.copy{border:1px solid var(--line);padding:3px 8px;font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+.copy:hover{border-color:var(--ink)}
+.notes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border:1px solid var(--line);border-top:0;background:var(--panel)}
+.note{padding:20px;border-right:1px solid var(--line)}
+.note:last-child{border-right:0}
+.note h3{font-size:var(--s-1);letter-spacing:.12em;text-transform:uppercase;display:flex;gap:10px;align-items:center;margin-bottom:8px}
+.note p{margin:0;color:var(--muted);font-size:var(--s-0);line-height:1.7}
+.sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:22px}
+.sec-head h2{font-family:var(--f-display);font-weight:900;font-size:clamp(36px,5vw,60px);line-height:.9}
+
+footer{padding:28px 0 40px;font-size:var(--s-0);color:var(--muted)}
+footer .wrap{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px}
+footer p{margin:0 0 6px;max-width:80ch}
+
+@media (max-width:960px){
+  .hero-row,.unit-body,.detail{grid-template-columns:1fr}
+  .hero-copy{border-right:0;border-bottom:1px solid var(--line);padding-right:0}
+  .index a{padding-left:0}
+  .spec{border-right:0;border-bottom:1px solid var(--line)}
+  .chain{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .notes{grid-template-columns:1fr}.note{border-right:0;border-bottom:1px solid var(--line)}.note:last-child{border-bottom:0}
+  .unit-head{grid-template-columns:auto minmax(0,1fr)}
+  .unit-head .btn{grid-column:1/-1;justify-self:start}
+}
+@media (max-width:520px){
+  .nav a:not(.keep){display:none}
+  .chain{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .index a{grid-template-columns:48px minmax(0,1fr) auto;gap:12px}.idx-arrow{display:none}
+  .slot{grid-template-columns:1fr}
+  footer .wrap{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="#top" aria-label="KLTZ/LAB Startseite">
+      <span class="mark-face" aria-hidden="true"><i></i><i></i></span>
+      <span class="mark-name">KLTZ/LAB</span>
+    </a>
+    <nav class="nav" aria-label="Hauptnavigation">
+      <a href="#vitals"><span>01</span>Vitals</a>
+      <a href="#larynx"><span>02</span>LARYNX</a>
+      <a class="keep" href="#download"><span>↓</span>Download</a>
+    </nav>
+    <button class="theme-btn" id="themeBtn" aria-label="Hell/Dunkel umschalten" title="Hell/Dunkel">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18V3Z"/><path d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20Zm0 2a8 8 0 1 0 0 16A8 8 0 0 0 12 4Z"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div class="label" style="display:flex;gap:10px;align-items:center;margin-bottom:10px"><span class="sq"></span><span>Tools für Windows</span><span>·</span><span id="toolCount">2 Units</span></div>
+      <h1 class="hero-type" aria-label="KLTZ/LAB">KLTZ<span class="slash">/</span>LAB</h1>
+      <div class="hero-row">
+        <div class="hero-copy">
+          <p>Kleine Windows-Tools, gebaut weil es sie so nicht gab. Jedes bekommt eine Nummer, ein Datenblatt und einen Download. Kostenlos, ohne Account, ohne Telemetrie.</p>
+          <div class="label"><span class="sq"></span><span>Windows 10 / 11 · x64</span></div>
+          <div><a class="btn" href="#download">Alle Downloads ↓</a></div>
+        </div>
+        <ol class="index" id="index" aria-label="Alle Tools"></ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 01 VITALS ===================== -->
+  <section class="unit" id="vitals" aria-labelledby="vitals-title">
+    <div class="wrap">
+      <div class="unit-head">
+        <div class="unit-no" aria-hidden="true">01</div>
+        <div>
+          <div class="label"><b>Unit 01</b> · Hardware-Monitor</div>
+          <h2 class="unit-title" id="vitals-title">VITALS</h2>
+          <p class="unit-tag">CPU, GPU, RAM und Stromverbrauch mit allen Temperaturen, die dein PC hergibt. Dazu die Top-Apps, die gerade am meisten ziehen. Fünf Designs, jedes hell und dunkel.</p>
+        </div>
+        <a class="btn" href="#download" data-dl="vitals">Download ↓</a>
+      </div>
+      <div class="unit-body">
+        <aside class="spec">
+          <table>
+            <tr><th>Version</th><td>1.1.0</td></tr>
+            <tr><th>Größe</th><td>120 MB</td></tr>
+            <tr><th>System</th><td>Windows 10/11 x64</td></tr>
+            <tr><th>Rechte</th><td>Administrator</td></tr>
+            <tr><th>Sensoren</th><td>LibreHardwareMonitor + PawnIO</td></tr>
+            <tr><th>Update-Rate</th><td>0,5 · 1 · 2 · 5 s</td></tr>
+          </table>
+          <ul class="feat">
+            <li>Last, Takt, Watt und Temperatur für CPU (pro Kern), GPU inkl. Hotspot &amp; VRAM</li>
+            <li>Top 3/5/8 Apps nach CPU, RAM, GPU oder geschätzten Watt, mit App-Icons</li>
+            <li>Alle Temperatursensoren, Lüfter, SSDs und Netzwerk</li>
+            <li>Session-Verbrauch in Wh und Kosten nach deinem Strompreis</li>
+            <li>Sparmodus im Tray, Autostart, Warngrenzen</li>
+          </ul>
+        </aside>
+        <div class="stage">
+          <div class="stage-bar">
+            <div class="seg" role="group" aria-label="Design" id="vThemes">
+              <button data-t="te" aria-pressed="true">Lab</button>
+              <button data-t="apple" aria-pressed="false">Glass</button>
+              <button data-t="y2k" aria-pressed="false">Y2K</button>
+              <button data-t="mica" aria-pressed="false">Mica</button>
+              <button data-t="gaming" aria-pressed="false">Gaming</button>
+            </div>
+            <div class="seg" role="group" aria-label="Modus" id="vModes">
+              <button data-m="dark" aria-pressed="true">Dunkel</button>
+              <button data-m="light" aria-pressed="false">Hell</button>
+            </div>
+          </div>
+          <div class="shot"><img id="vShot" src="img/vitals-te-dark.jpg" alt="VITALS Übersicht im Lab-Design, dunkel" width="1320" height="860"></div>
+          <div class="caption" id="vCap">Design 01 · Lab · Retro-Mono mit Dot-Matrix-Zahlen und Status-Roboter</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 02 LARYNX ===================== -->
+  <section class="unit" id="larynx" aria-labelledby="sv-title">
+    <div class="wrap">
+      <div class="unit-head">
+        <div class="unit-no" aria-hidden="true">02</div>
+        <div>
+          <div class="label"><b>Unit 02</b> · Stimm-Effektkette · <span style="color:var(--accent)">Beta</span></div>
+          <h2 class="unit-title" id="sv-title">LARYNX</h2>
+          <p class="unit-tag">Ein komplettes Studio-Rack für dein Mikro, live vor Discord, OBS &amp; Co. KI-Rauschunterdrückung, Gate, EQ, Kompressor und Effekte von Radio bis Dalek.</p>
+        </div>
+        <a class="btn" href="#download" data-dl="larynx">Download ↓</a>
+      </div>
+      <div class="unit-body">
+        <aside class="spec">
+          <table>
+            <tr><th>Version</th><td>0.9.5 Beta</td></tr>
+            <tr><th>Größe</th><td>0,9 MB</td></tr>
+            <tr><th>System</th><td>Windows 10/11 x64</td></tr>
+            <tr><th>Engine</th><td>Nativ C++, DirectX 11</td></tr>
+            <tr><th>Ausgang</th><td>VB-Audio Virtual Cable</td></tr>
+            <tr><th>Module</th><td>14 in Reihe</td></tr>
+            <tr><th>Presets</th><td>Clean bis Dalek</td></tr>
+          </table>
+          <div>
+            <div class="label" style="margin-bottom:10px"><b>Presets</b> · Auswahl</div>
+            <div class="presets" id="presets"></div>
+          </div>
+        </aside>
+        <div class="stage">
+          <div class="stage-bar">
+            <div class="seg" role="group" aria-label="Ansicht" id="lViews">
+              <button data-v="dark" aria-pressed="true">Clean · Dunkel</button>
+              <button data-v="light" aria-pressed="false">Clean · Hell</button>
+              <button data-v="fx-dark" aria-pressed="false">FX</button>
+            </div>
+          </div>
+          <div class="shot" style="aspect-ratio:1240/880"><img id="lShot" src="img/larynx-dark.jpg" alt="LARYNX, Tab Clean, dunkel" width="1240" height="880"></div>
+          <div class="flow" aria-hidden="true" style="margin-top:6px"><span><span class="sq"></span>Mikro</span><span>Discord / OBS<span class="sq"></span></span></div>
+          <div class="chain" id="chain" role="group" aria-label="Signalkette, Modul auswählen"></div>
+          <div class="detail" id="detail" aria-live="polite"></div>
+          <div class="caption">Signalkette in der Reihenfolge, in der LARYNX deine Stimme bearbeitet. Modul anklicken für Details. Texte stammen aus der App.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 03 NEXT ===================== -->
+  <section class="unit" aria-label="Nächstes Tool">
+    <div class="wrap">
+      <div class="slot">
+        <div class="unit-no" aria-hidden="true">03</div>
+        <div>
+          <div class="label"><b>Unit 03</b> · In Arbeit</div>
+          <h2 class="unit-title" style="font-size:clamp(32px,4vw,48px)">NÄCHSTES TOOL</h2>
+          <p>Hier landet das nächste Teil der Reihe. Jedes neue Tool bekommt seine Nummer, sein Datenblatt und einen Eintrag in der Download-Liste.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== DOWNLOADS ===================== -->
+  <section class="unit" id="download" aria-labelledby="dl-title">
+    <div class="wrap">
+      <div class="sec-head"><span class="sq"></span><h2 id="dl-title">DOWNLOAD</h2><span class="label">Installer · Windows x64</span></div>
+      <div class="dl-wrap">
+        <table class="dl">
+          <thead><tr><th>Unit</th><th>Version</th><th>Größe</th><th>SHA-256</th><th></th></tr></thead>
+          <tbody id="dlBody"></tbody>
+        </table>
+      </div>
+      <div class="notes">
+        <div class="note"><h3><span class="sq"></span>SmartScreen</h3><p>Die Installer sind nicht digital signiert. Windows warnt deshalb beim ersten Start: „Weitere Informationen“ → „Trotzdem ausführen“. Mit dem SHA-256-Wert oben kannst du prüfen, ob die Datei unverändert ist.</p></div>
+        <div class="note"><h3><span class="sq"></span>VITALS</h3><p>Startet mit Adminrechten, sonst gibt Windows keine CPU-Temperaturen raus. Der Installer bietet den signierten PawnIO-Treiber an: für CPU-, Mainboard-Temps und Lüfter mit „Ja“ bestätigen.</p></div>
+        <div class="note"><h3><span class="sq"></span>LARYNX</h3><p>Leitet deine bearbeitete Stimme an Discord, OBS &amp; Co. weiter. In der App führt „Discord einrichten“ durch die Einstellung, mit „Bypass“ hörst du jederzeit den Vorher-Nachher-Vergleich. Ersetzt SixtyVox: Die alte Version wird beim Installieren entfernt, deine Presets ziehen mit um.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <p>KLTZ/LAB · Tools für Windows · Kostenlos</p>
+      <p>Drittanbieter: LibreHardwareMonitor (MPL-2.0), PawnIO, Electron (MIT) in VITALS · RNNoise (BSD-3-Clause), Dear ImGui (MIT), Schriften JetBrains Mono und Doto (SIL OFL 1.1) in LARYNX.</p>
+    </div>
+    <div class="label" id="year"></div>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   Neue Tools: einfach einen Eintrag in TOOLS ergänzen.
+   REPO = dein GitHub "name/repo". Die Installer kommen als
+   Release-Assets unter dem jeweiligen Tag dorthin.
+   ============================================================ */
+const REPO = 'Sixtysyx/KLRT-LABS';
+const TOOLS = [
+  { id: 'vitals', no: '01', name: 'VITALS', what: 'Hardware-Monitor', status: 'stable', version: '1.1.0', tag: 'vitals-v1.1.0',
+    file: 'VITALS-Setup-1.1.0.exe', size: 125724462, sha256: '4c0011c40ab5b786c9bb1da3f866c6fd7b4e176be954a5e8211b397fbf5f3c03' },
+  { id: 'larynx', no: '02', name: 'LARYNX', what: 'Stimm-Effektkette', status: 'beta', version: '0.9.5 Beta', tag: 'larynx-v0.9.5',
+    file: 'LARYNX-0.9.5-Beta-Setup.exe', size: 916010, sha256: '58cd315396ce38bbc7ed0d3b2457ad278b1926ee226524487d4ec3d4d61e3116' },
+  { id: null, no: '03', name: 'NÄCHSTES TOOL', what: 'In Arbeit', status: 'wip' },
+];
+
+const $ = (s, r = document) => r.querySelector(s);
+const STATUS = { stable: 'Stabil', beta: 'Beta', wip: 'In Arbeit' };
+const mb = b => (b / 1048576).toLocaleString('de-DE', { maximumFractionDigits: b < 1e7 ? 1 : 0 }) + ' MB';
+const repoSet = !REPO.startsWith('DEIN-');
+const url = t => `https://github.com/${REPO}/releases/download/${t.tag}/${t.file}`;
+
+// index
+$('#index').innerHTML = TOOLS.map(t => `<li><a href="${t.id ? '#' + t.id : '#download'}">
+  <span class="idx-no">${t.no}</span>
+  <span><span class="idx-name">${t.name}</span><span class="idx-what" style="display:block">${t.what}${t.version ? ' · v' + t.version : ''}</span></span>
+  <span class="chip ${t.status}">${STATUS[t.status]}</span><span class="idx-arrow" aria-hidden="true">→</span></a></li>`).join('');
+$('#toolCount').textContent = TOOLS.filter(t => t.id).length + ' Units';
+
+// downloads
+$('#dlBody').innerHTML = TOOLS.filter(t => t.file).map(t => `<tr>
+  <td class="nm">${t.no} · ${t.name}<small>${t.file}</small></td>
+  <td>${t.version} <span class="chip ${t.status}" style="margin-left:6px">${STATUS[t.status]}</span></td>
+  <td>${mb(t.size)}</td>
+  <td><span class="hash"><code title="${t.sha256}">${t.sha256}</code><button class="copy" data-copy="${t.sha256}" type="button">Kopieren</button></span></td>
+  <td style="text-align:right">${repoSet ? `<a class="btn" href="${url(t)}">Download</a>` : `<a class="btn" aria-disabled="true" title="REPO im Script eintragen">Link folgt</a>`}</td></tr>`).join('');
+document.addEventListener('click', async e => {
+  const b = e.target.closest('[data-copy]'); if (!b) return;
+  try { await navigator.clipboard.writeText(b.dataset.copy); b.textContent = 'Kopiert'; }
+  catch { b.textContent = 'Markieren'; }
+  setTimeout(() => b.textContent = 'Kopieren', 1600);
+});
+
+// VITALS theme viewer
+const V_CAP = {
+  te: 'Design 01 · Lab · Retro-Mono mit Dot-Matrix-Zahlen und Status-Roboter',
+  apple: 'Design 02 · Glass · Glaskarten und Aktivitätsringe',
+  y2k: 'Design 03 · Y2K · Chrome, Tachos und Top-Apps auf dem Klapphandy',
+  mica: 'Design 04 · Mica · Unter Windows 11 echt durchsichtig, Akzentfarbe frei wählbar',
+  gaming: 'Design 05 · Gaming · Neon-Glow und schräge Kanten, Akzentfarbe frei wählbar',
+};
+const V_NAME = { te: 'Lab', apple: 'Glass', y2k: 'Y2K', mica: 'Mica', gaming: 'Gaming' };
+let vt = 'te', vm = 'dark';
+function showV() {
+  $('#vShot').src = `img/vitals-${vt}-${vm}.jpg`;
+  $('#vShot').alt = `VITALS Übersicht im ${V_NAME[vt]}-Design, ${vm === 'dark' ? 'dunkel' : 'hell'}`;
+  $('#vCap').textContent = V_CAP[vt];
+  document.querySelectorAll('#vThemes button').forEach(b => b.setAttribute('aria-pressed', b.dataset.t === vt));
+  document.querySelectorAll('#vModes button').forEach(b => b.setAttribute('aria-pressed', b.dataset.m === vm));
+}
+$('#vThemes').addEventListener('click', e => { const b = e.target.closest('button'); if (b) { vt = b.dataset.t; showV(); } });
+$('#vModes').addEventListener('click', e => { const b = e.target.closest('button'); if (b) { vm = b.dataset.m; showV(); } });
+// preload the others
+for (const t of Object.keys(V_CAP)) for (const m of ['dark', 'light']) { const i = new Image(); i.src = `img/vitals-${t}-${m}.jpg`; }
+
+// LARYNX screenshots
+const L_ALT = { 'dark': 'LARYNX, Tab Clean, dunkel', 'light': 'LARYNX, Tab Clean, hell', 'fx-dark': 'LARYNX, Tab FX, dunkel' };
+$('#lViews').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return;
+  $('#lShot').src = `img/larynx-${b.dataset.v}.jpg`; $('#lShot').alt = L_ALT[b.dataset.v];
+  document.querySelectorAll('#lViews button').forEach(x => x.setAttribute('aria-pressed', x === b)); });
+for (const v of Object.keys(L_ALT)) { const i = new Image(); i.src = `img/larynx-${v}.jpg`; }
+
+// LARYNX chain — names, order and texts taken from the app
+const MODS = [
+  { n: 'Input', d: 'Verstärkt oder senkt das Mikro, bevor irgendwas passiert.', p: [['Gain', 'Eingangspegel']] },
+  { n: 'Denoise', d: 'KI-Rauschunterdrückung (RNNoise): filtert Lüfter, Brummen, Tastatur.', p: [['Amount', 'Wie viel vom entrauschten Signal benutzt wird. 100 % = maximal sauber.']] },
+  { n: 'Noise Gate', d: 'Macht das Mikro in Sprechpausen leiser.', p: [['Schwelle', 'Ab diesem Pegel geht das Gate auf.'], ['Absenkung', 'Wie stark leise Stellen abgesenkt werden. 80 dB = komplett stumm.'], ['Attack · Hold · Release', 'Wie schnell es öffnet, wie lange es offen bleibt, wie sanft es schließt.']] },
+  { n: 'Equalizer', d: 'Klangregelung, vom Rumpeln bis zur Luft obenrum.', p: [['Low Cut', 'Schneidet Rumpeln und Trittschall unten weg.'], ['Mitten', '200–500 Hz = Mulm/Dröhnen.'], ['Präsenz', '3–5 kHz = Verständlichkeit.'], ['Air', 'Glanz und Luft obenrum.']] },
+  { n: 'Kompressor', d: 'Gleicht laut und leise aus.', p: [['Ratio', '2:1 sanft, 4:1 deutlich, 10:1+ fast Limiter.'], ['Attack', 'Langsamer = mehr Punch bei Konsonanten.'], ['Auto-Makeup', 'Berechnet den Lautstärke-Ausgleich automatisch.']] },
+  { n: 'De-Esser', d: 'Zähmt scharfe S- und Sch-Laute.', p: [['Frequenz', 'Wo die S-Laute sitzen.'], ['Range', 'Maximale Absenkung der Zischlaute.']] },
+  { n: 'Pitch', d: 'Verschiebt die Tonhöhe: tiefe Dämonenstimme oder Chipmunk.', p: [['Halbtöne', 'Minus = tiefer, Plus = höher. 12 = eine Oktave.'], ['Formant', 'Klangfarbe/Körpergröße der Stimme. 0 = natürlich.'], ['Mix', 'Unter 100 % wird die Originalstimme mitgemischt.']] },
+  { n: 'Robot', d: 'Ringmodulator: metallische Roboterstimme.', p: [['Frequenz', 'Tief = Dalek/Roboter, hoch = glitchy Metall.'], ['Mix', 'Anteil des Robot-Signals.']] },
+  { n: 'Distortion', d: 'Verzerrung mit Charakter, von warm bis kaputt.', p: [['Typ', 'Charakter der Verzerrung, z. B. Bitcrush oder Radio.'], ['Drive', 'Wie stark angezerrt wird.'], ['Mix', 'Unter 100 % = parallele Verzerrung, Stimme bleibt klar.']] },
+  { n: 'Flutter', d: 'Tape-Leiern / Vibrato. Mit Mix ~50 % wird’s ein Chorus.', p: [['Speed · Tiefe', 'Wie schnell und wie stark es leiert.'], ['Mix', '100 % = Vibrato, 50 % = Chorus/Doubler.']] },
+  { n: 'Echo', d: 'Delay mit Tape-Charakter.', p: [['Zeit', 'Abstand zwischen den Wiederholungen.'], ['Feedback', 'Wie viele Wiederholungen.'], ['Tone', 'Jede Wiederholung wird dunkler, wie bei Tape.']] },
+  { n: 'Reverb', d: 'Hall, vom kleinen Raum bis zur Kathedrale.', p: [['Raumgröße', 'Länge der Hallfahne, ca. 0,4 bis 7 s.'], ['Pre-Delay', 'Hält die Stimme vorne und klar.'], ['Mix', 'Anteil des Halls.']] },
+  { n: 'Limiter', d: 'Fängt Spitzen ab (Lachen, Schreien), damit nichts übersteuert.', p: [['Ceiling', 'Höchster Pegel, den das Signal erreichen darf.']] },
+  { n: 'Output', d: 'Endlautstärke, die bei Discord & Co. ankommt. Bypass schaltet alles aus, zum Vergleichen.', p: [['Gain', 'Ausgangspegel'], ['Bypass', 'Alles aus, für den Vorher-Nachher-Vergleich.']] },
+];
+const chain = $('#chain');
+chain.innerHTML = MODS.map((m, i) => `<button class="mod" type="button" data-i="${i}" aria-pressed="false" style="--r:${(i * 47) % 240 - 120}deg">
+  <span class="led" aria-hidden="true"></span><span class="mod-no">${String(i + 1).padStart(2, '0')}</span><span class="mod-name">${m.n}</span><span class="knob" aria-hidden="true"></span></button>`).join('');
+function pick(i) {
+  chain.querySelectorAll('.mod').forEach(b => b.setAttribute('aria-pressed', +b.dataset.i === i));
+  const m = MODS[i];
+  $('#detail').innerHTML = `<div><div class="label"><b>Modul ${String(i + 1).padStart(2, '0')}</b> von ${MODS.length}</div><h3 style="margin-top:8px">${m.n.toUpperCase()}</h3><p>${m.d}</p></div>
+    <ul class="params">${m.p.map(([k, v]) => `<li><b>${k}</b><span>${v}</span></li>`).join('')}</ul>`;
+}
+chain.addEventListener('click', e => { const b = e.target.closest('.mod'); if (b) pick(+b.dataset.i); });
+pick(1);
+
+const PRESETS = ['Discord Clean', 'Studio Voice', 'Podcast Warm', 'Radio Host', 'Broadcast', 'Stream Laut', 'Nur Denoise', 'Extra sicher', 'Vocal Plate', 'Warm Glow', 'Telefon', 'Radio', 'Lo-Fi Emo', 'Tape Dream', 'Tape Echo', 'Slapback', 'Kathedrale', 'Riese', 'Chipmunk', 'Anime', 'Oktav-Layer', 'Dalek', 'Robot', 'Metall', 'Glitch', 'Bitcrush', 'Rage Fuzz', 'Wobble'];
+$('#presets').innerHTML = PRESETS.map((p, i) => `<span class="${i < 2 ? 'hl' : ''}">${p}</span>`).join('');
+
+// theme toggle (remembers choice when storage is available)
+const root = document.documentElement;
+try { const s = localStorage.getItem('kltz-theme'); if (s) root.dataset.theme = s; } catch {}
+$('#themeBtn').addEventListener('click', () => {
+  const dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  root.dataset.theme = dark ? 'light' : 'dark';
+  try { localStorage.setItem('kltz-theme', root.dataset.theme); } catch {}
+});
+$('#year').textContent = '© ' + new Date().getFullYear() + ' KLTZ/LAB';
+</script>
+</body>
+</html>
