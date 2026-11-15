@@ -377,7 +377,7 @@ footer p{margin:0 0 6px;max-width:80ch}
       <div class="unit-body">
         <aside class="spec">
           <table>
-            <tr><th>Version</th><td>0.9.1 Beta</td></tr>
+            <tr><th>Version</th><td>0.9.2 Beta</td></tr>
             <tr><th>Größe</th><td>1,2 MB</td></tr>
             <tr><th>System</th><td>Windows 10/11 x64</td></tr>
             <tr><th>Engine</th><td>Nativ C++, DirectX 11</td></tr>
@@ -467,8 +467,8 @@ const TOOLS = [
     file: 'LARYNX-0.9.5-Beta-Setup.exe', size: 916010, sha256: '58cd315396ce38bbc7ed0d3b2457ad278b1926ee226524487d4ec3d4d61e3116' },
   { id: 'digest', no: '03', name: 'DIGEST', what: 'Download-Sortierer', status: 'beta', version: '0.9 Beta', tag: 'digest-v0.9',
     file: 'DIGEST-0.9-Beta-Setup.exe', size: 1030805, sha256: '9a56ee2790f46e127aef74e416b2a97e042025cbe2cb6cfa01ffe1b2436e005d' },
-  { id: 'suture', no: '04', name: 'SUTURE', what: 'Podcast-Schnitt', status: 'beta', version: '0.9.1 Beta', tag: 'suture-v0.9.1',
-    file: 'SUTURE-0.9.1-Beta-Setup.exe', size: 1235152, sha256: 'de0234ad895a0635114395be1bfbc6394316c058e91b32bf16f27d03d9f4f8a4' },
+  { id: 'suture', no: '04', name: 'SUTURE', what: 'Podcast-Schnitt', status: 'beta', version: '0.9.2 Beta', tag: 'suture-v0.9.2',
+    file: 'SUTURE-0.9.2-Beta-Setup.exe', size: 1244132, sha256: 'a29ff88eb28217a05b6e52ca58608000bf3cc55d84c771c62a66b7c62292f2f2' },
   { id: null, no: '05', name: 'NÄCHSTES TOOL', what: 'In Arbeit', status: 'wip' },
 ];
 
@@ -570,7 +570,8 @@ $('#sutureSteps').innerHTML = [
   'Intro: Musik in deiner Lautstärke, sanft leiser unter der Stimme, Ausblende nach dem letzten Wort.',
   'Outro: startet unter dem letzten „Tschüss“, Startpunkt per Maus verschiebbar.',
   'Klang: Sprecher gleich laut, Übersprechen gedämpft, −16 LUFS.',
-  'Export: MP3 + WAV. Deine Originale bleiben unangetastet.',
+  'Bedienung: Mausrad scrollt, Strg + Mausrad zoomt, F11 = Vollbild, Strg + Z macht rückgängig.',
+  'Export: MP3 + WAV. Deine Originale bleiben unangetastet, das Projekt merkt sich SUTURE automatisch.',
 ].map((r, i) => `<li><span>${String(i + 1).padStart(2, '0')}</span>${r}</li>`).join('');
 
 // LARYNX chain — names, order and texts taken from the app
