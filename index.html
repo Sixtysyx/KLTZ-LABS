@@ -377,7 +377,7 @@ footer p{margin:0 0 6px;max-width:80ch}
       <div class="unit-body">
         <aside class="spec">
           <table>
-            <tr><th>Version</th><td>0.9 Beta</td></tr>
+            <tr><th>Version</th><td>0.9.1 Beta</td></tr>
             <tr><th>Größe</th><td>1,2 MB</td></tr>
             <tr><th>System</th><td>Windows 10/11 x64</td></tr>
             <tr><th>Engine</th><td>Nativ C++, DirectX 11</td></tr>
@@ -402,7 +402,7 @@ footer p{margin:0 0 6px;max-width:80ch}
             </div>
           </div>
           <div class="shot" style="aspect-ratio:1280/840"><img id="sShot" src="img/suture-cut.jpg" alt="SUTURE, Tab Schnitt" width="1280" height="840"></div>
-          <div class="caption" id="sCap">Orange heißt: wird rausgeschnitten. Ein Klick auf eine Pause behält sie.</div>
+          <div class="caption" id="sCap">Orange = Pause wird gekürzt. Eigene Stellen markierst du mit der Maus oder tippst Von/Bis ein.</div>
         </div>
       </div>
     </div>
@@ -467,8 +467,8 @@ const TOOLS = [
     file: 'LARYNX-0.9.5-Beta-Setup.exe', size: 916010, sha256: '58cd315396ce38bbc7ed0d3b2457ad278b1926ee226524487d4ec3d4d61e3116' },
   { id: 'digest', no: '03', name: 'DIGEST', what: 'Download-Sortierer', status: 'beta', version: '0.9 Beta', tag: 'digest-v0.9',
     file: 'DIGEST-0.9-Beta-Setup.exe', size: 1030805, sha256: '9a56ee2790f46e127aef74e416b2a97e042025cbe2cb6cfa01ffe1b2436e005d' },
-  { id: 'suture', no: '04', name: 'SUTURE', what: 'Podcast-Schnitt', status: 'beta', version: '0.9 Beta', tag: 'suture-v0.9',
-    file: 'SUTURE-0.9-Beta-Setup.exe', size: 1224700, sha256: '62235a1dd0d65d18728ccb5ab8a8ec2143cf2a098202c4265ad0d71395af489a' },
+  { id: 'suture', no: '04', name: 'SUTURE', what: 'Podcast-Schnitt', status: 'beta', version: '0.9.1 Beta', tag: 'suture-v0.9.1',
+    file: 'SUTURE-0.9.1-Beta-Setup.exe', size: 1235152, sha256: 'de0234ad895a0635114395be1bfbc6394316c058e91b32bf16f27d03d9f4f8a4' },
   { id: null, no: '05', name: 'NÄCHSTES TOOL', what: 'In Arbeit', status: 'wip' },
 ];
 
@@ -553,9 +553,9 @@ $('#rules').innerHTML = [
 
 // SUTURE screenshots + steps
 const S_VIEW = {
-  cut: ['SUTURE, Tab Schnitt', 'Orange heißt: wird rausgeschnitten. Ein Klick auf eine Pause behält sie.'],
+  cut: ['SUTURE, Tab Schnitt', 'Orange = Pause wird gekürzt. Eigene Stellen markierst du mit der Maus oder tippst Von/Bis ein.'],
   material: ['SUTURE, Tab Material', 'Spuren reinziehen. Unterschiedlich lange Aufnahmen richtet SUTURE selbst aus.'],
-  sound: ['SUTURE, Tab Klang', 'Intro-Musik, Ausblende, Outro und Lautheit, alles mit festen Stufen statt Regler-Gefummel.'],
+  sound: ['SUTURE, Tab Klang', 'Musik-Lautstärke wählen, das Outro einfach an die richtige Stelle unter das letzte „Tschüss“ ziehen.'],
   export: ['SUTURE, Tab Export', 'MP3 für Spotify & Co. und WAV als Master, mit Titel im ID3-Tag.'],
   light: ['SUTURE, Tab Schnitt, hell', 'Hell und Dunkel, wie alle Units der Reihe.'],
 };
@@ -566,8 +566,9 @@ for (const v of Object.keys(S_VIEW)) { const i = new Image(); i.src = `img/sutur
 $('#sutureSteps').innerHTML = [
   'Spuren rein: 1–4 Sprecher, versetzte Aufnahmen werden automatisch ausgerichtet.',
   'Pausen raus: geschnitten wird nur, wo alle gleichzeitig still sind. So bleibt alles synchron.',
-  'Intro: Musik vorweg, leiser unter der Stimme, danach ausblenden.',
-  'Outro: der Intro-Song kommt automatisch ans Ende.',
+  'Eigene Schnitte: Versprecher markieren oder z.B. 34:39–35:43 eintippen, raus damit.',
+  'Intro: Musik in deiner Lautstärke, sanft leiser unter der Stimme, Ausblende nach dem letzten Wort.',
+  'Outro: startet unter dem letzten „Tschüss“, Startpunkt per Maus verschiebbar.',
   'Klang: Sprecher gleich laut, Übersprechen gedämpft, −16 LUFS.',
   'Export: MP3 + WAV. Deine Originale bleiben unangetastet.',
 ].map((r, i) => `<li><span>${String(i + 1).padStart(2, '0')}</span>${r}</li>`).join('');
