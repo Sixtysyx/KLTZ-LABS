@@ -150,6 +150,7 @@ h1,h2,h3{text-wrap:balance;margin:0}
 .copy{border:1px solid var(--line);padding:3px 8px;font-size:10px;letter-spacing:.1em;text-transform:uppercase}
 .copy:hover{border-color:var(--ink)}
 .notes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;border:1px solid var(--line);border-top:0;background:var(--panel)}
+.notes .note:last-child:nth-child(even){grid-column:1/-1}.note:nth-last-child(2):nth-child(odd){border-bottom:1px solid var(--line)}
 .note{padding:20px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}.note:first-child{grid-column:1/-1;border-right:0}.note:nth-child(2n+1){border-right:0}.note:nth-last-child(-n+2){border-bottom:0}
 .note:last-child{border-right:0}
 .note h3{font-size:var(--s-1);letter-spacing:.12em;text-transform:uppercase;display:flex;gap:10px;align-items:center;margin-bottom:8px}
@@ -196,6 +197,7 @@ footer p{margin:0 0 6px;max-width:80ch}
       <a href="#larynx"><span>02</span>LARYNX</a>
       <a href="#digest"><span>03</span>DIGEST</a>
       <a href="#suture"><span>04</span>SUTURE</a>
+      <a href="#retina"><span>05</span>RETINA</a>
       <a class="keep" href="#download"><span>↓</span>Download</a>
     </nav>
     <button class="theme-btn" id="themeBtn" aria-label="Hell/Dunkel umschalten" title="Hell/Dunkel">
@@ -408,13 +410,57 @@ footer p{margin:0 0 6px;max-width:80ch}
     </div>
   </section>
 
-  <!-- ===================== 05 NEXT ===================== -->
+  <!-- ===================== 05 RETINA ===================== -->
+  <section class="unit" id="retina" aria-labelledby="re-title">
+    <div class="wrap">
+      <div class="unit-head">
+        <div class="unit-no" aria-hidden="true">05</div>
+        <div>
+          <div class="label"><b>Unit 05</b> · Schreibmaschine · <span style="color:var(--accent)">Beta</span></div>
+          <h2 class="unit-title" id="re-title">RETINA</h2>
+          <p class="unit-tag">Schreiben wie auf einer Schreibmaschine: echtes Papier mit Struktur, eine warme Lampe im Bügel, jeder Anschlag klackt. Nur dass Backspace funktioniert und am Ende ein sauberes PDF rauskommt.</p>
+        </div>
+        <a class="btn" href="#download" data-dl="retina">Download ↓</a>
+      </div>
+      <div class="unit-body">
+        <aside class="spec">
+          <table>
+            <tr><th>Version</th><td>0.9 Beta</td></tr>
+            <tr><th>Größe</th><td>1,1 MB</td></tr>
+            <tr><th>System</th><td>Windows 10/11 x64</td></tr>
+            <tr><th>Engine</th><td>Nativ C++, DirectX 11</td></tr>
+            <tr><th>Seite</th><td>A4, Pica 10 cpi, 62 × 58</td></tr>
+            <tr><th>Schrift</th><td>Special Elite, Courier Prime</td></tr>
+            <tr><th>Formate</th><td>TXT rein/raus, PDF raus</td></tr>
+          </table>
+          <div>
+            <div class="label" style="margin-bottom:10px"><b>So schreibt RETINA</b></div>
+            <ol class="rules" id="retinaSteps"></ol>
+          </div>
+        </aside>
+        <div class="stage">
+          <div class="stage-bar">
+            <div class="seg" role="group" aria-label="Ansicht" id="rViews">
+              <button data-v="write" aria-pressed="true">Schreiben</button>
+              <button data-v="panel" aria-pressed="false">Einstellungen</button>
+              <button data-v="lined" aria-pressed="false">Liniert</button>
+              <button data-v="grid" aria-pressed="false">Kariert</button>
+            </div>
+          </div>
+          <div class="shot" style="aspect-ratio:1320/820"><img id="rShot" src="img/retina-write.jpg" alt="RETINA beim Schreiben" width="1320" height="820" loading="lazy"></div>
+          <div class="caption" id="rCap">Der Wagen läuft mit: Die Zeile, an der du tippst, steht immer direkt über der Lampe.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 06 NEXT ===================== -->
   <section class="unit" aria-label="Nächstes Tool">
     <div class="wrap">
       <div class="slot">
-        <div class="unit-no" aria-hidden="true">05</div>
+        <div class="unit-no" aria-hidden="true">06</div>
         <div>
-          <div class="label"><b>Unit 05</b> · In Arbeit</div>
+          <div class="label"><b>Unit 06</b> · In Arbeit</div>
           <h2 class="unit-title" style="font-size:clamp(32px,4vw,48px)">NÄCHSTES TOOL</h2>
           <p>Hier landet das nächste Teil der Reihe. Jedes neue Tool bekommt seine Nummer, sein Datenblatt und einen Eintrag in der Download-Liste.</p>
         </div>
@@ -438,6 +484,7 @@ footer p{margin:0 0 6px;max-width:80ch}
         <div class="note"><h3><span class="sq"></span>LARYNX</h3><p>Leitet deine bearbeitete Stimme an Discord, OBS &amp; Co. weiter. In der App führt „Discord einrichten“ durch die Einstellung, mit „Bypass“ hörst du jederzeit den Vorher-Nachher-Vergleich. Ersetzt SixtyVox: Die alte Version wird beim Installieren entfernt, deine Presets ziehen mit um.</p></div>
         <div class="note"><h3><span class="sq"></span>DIGEST</h3><p>Startet mit deinem Downloads-Ordner und zeigt erst nur eine Vorschau. Doppelte Dateien wandern in einen Quarantäne-Ordner, nicht in den Papierkorb. Alles, was DIGEST verschiebt, kannst du unter VERLAUF wieder an den alten Platz holen.</p></div>
         <div class="note"><h3><span class="sq"></span>SUTURE</h3><p>Zieh deine Aufnahmen ins Fenster, eine Datei pro Person oder alles in einer. SUTURE fasst die Originale nie an, es schreibt nur neue Dateien. Der MP3-Encoder LAME liegt als eigene DLL bei.</p></div>
+        <div class="note"><h3><span class="sq"></span>RETINA</h3><p>Die Anschlag-Geräusche erzeugt RETINA selbst. Wenn du eigene Sounds hast, leg sie als WAV in einen Ordner (key…, space…, return…, bell…, backspace…) und wähle ihn in den Einstellungen unter TON. Die Dateien bleiben bei dir, sie werden nicht mitverteilt.</p></div>
       </div>
     </div>
   </section>
@@ -447,7 +494,7 @@ footer p{margin:0 0 6px;max-width:80ch}
   <div class="wrap">
     <div>
       <p>KLTZ/LAB · Tools für Windows · Kostenlos</p>
-      <p>Drittanbieter: LibreHardwareMonitor (MPL-2.0), PawnIO, Electron (MIT) in VITALS · RNNoise (BSD-3-Clause), Dear ImGui (MIT), Schriften JetBrains Mono und Doto (SIL OFL 1.1) in LARYNX, DIGEST und SUTURE · DejaVu-Pfeile (Bitstream-Vera-Lizenz) in DIGEST und SUTURE · LAME (LGPL) und dr_libs (Public Domain/MIT-0) in SUTURE.</p>
+      <p>Drittanbieter: LibreHardwareMonitor (MPL-2.0), PawnIO, Electron (MIT) in VITALS · RNNoise (BSD-3-Clause), Dear ImGui (MIT), Schriften JetBrains Mono und Doto (SIL OFL 1.1) in LARYNX, DIGEST, SUTURE und RETINA · DejaVu-Pfeile (Bitstream-Vera-Lizenz) in DIGEST, SUTURE und RETINA · LAME (LGPL) in SUTURE · dr_libs (Public Domain/MIT-0) in SUTURE und RETINA · Schreibmaschinen-Schriften Special Elite (Apache 2.0) und Courier Prime (SIL OFL 1.1) in RETINA.</p>
     </div>
     <div class="label" id="year"></div>
   </div>
@@ -469,7 +516,9 @@ const TOOLS = [
     file: 'DIGEST-0.9-Beta-Setup.exe', size: 1030805, sha256: '9a56ee2790f46e127aef74e416b2a97e042025cbe2cb6cfa01ffe1b2436e005d' },
   { id: 'suture', no: '04', name: 'SUTURE', what: 'Podcast-Schnitt', status: 'beta', version: '0.9.2 Beta', tag: 'suture-v0.9.2',
     file: 'SUTURE-0.9.2-Beta-Setup.exe', size: 1244132, sha256: 'a29ff88eb28217a05b6e52ca58608000bf3cc55d84c771c62a66b7c62292f2f2' },
-  { id: null, no: '05', name: 'NÄCHSTES TOOL', what: 'In Arbeit', status: 'wip' },
+  { id: 'retina', no: '05', name: 'RETINA', what: 'Schreibmaschine', status: 'beta', version: '0.9 Beta', tag: 'retina-v0.9',
+    file: 'RETINA-0.9-Beta-Setup.exe', size: 1163530, sha256: '1cb07db1a3648a2202a3e32aec62d8132227e380b8fe6b186097c529fb03486e' },
+  { id: null, no: '06', name: 'NÄCHSTES TOOL', what: 'In Arbeit', status: 'wip' },
 ];
 
 const $ = (s, r = document) => r.querySelector(s);
@@ -572,6 +621,26 @@ $('#sutureSteps').innerHTML = [
   'Klang: Sprecher gleich laut, Übersprechen gedämpft, −16 LUFS.',
   'Bedienung: Mausrad scrollt, Strg + Mausrad zoomt, F11 = Vollbild, Strg + Z macht rückgängig.',
   'Export: MP3 + WAV. Deine Originale bleiben unangetastet, das Projekt merkt sich SUTURE automatisch.',
+].map((r, i) => `<li><span>${String(i + 1).padStart(2, '0')}</span>${r}</li>`).join('');
+const R_VIEW = {
+  write: ['RETINA beim Schreiben', 'Der Wagen läuft mit: Die Zeile, an der du tippst, steht immer direkt über der Lampe.'],
+  panel: ['RETINA, Einstellungen', 'Lichtfarbe, Helligkeit, Raum, Papier, Schrift und Ton. Eigene Anschlag-Sounds kannst du als WAV dazulegen.'],
+  lined: ['RETINA, liniertes Papier, kaltes Licht', 'Glattes Papier, liniert, kaltweißes Licht und ein heller Raum.'],
+  grid: ['RETINA, kariertes Papier, rotes Licht', 'Altes Papier, kariert, rotes Licht. Die Struktur reagiert auf die Lampe.'],
+};
+$('#rViews').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return;
+  const v = b.dataset.v; $('#rShot').src = `img/retina-${v}.jpg`; $('#rShot').alt = R_VIEW[v][0]; $('#rCap').textContent = R_VIEW[v][1];
+  document.querySelectorAll('#rViews button').forEach(x => x.setAttribute('aria-pressed', x === b)); });
+for (const v of Object.keys(R_VIEW)) { const i = new Image(); i.src = `img/retina-${v}.jpg`; }
+$('#retinaSteps').innerHTML = [
+  'Tippen: jede Taste mit eigenem Anschlag, Leertaste, Zeilenschaltung und Glocke kurz vor dem Rand.',
+  'Der Wagen fährt: Der Text wandert beim Schreiben nach links, wie bei einer echten Maschine.',
+  'Halb modern: Backspace, Entf, Pfeiltasten, Markieren, Kopieren und Strg + Z gehen trotzdem.',
+  'Licht: Farbe frei wählbar, vier Helligkeiten, Raum dunkel bis hell. Die Papierstruktur reagiert darauf.',
+  'Papier: glatt, Baumwolle, Recycling oder alt, dazu blanko, liniert oder kariert.',
+  'Speichern als TXT. RETINA sichert nebenbei automatisch, nichts geht verloren.',
+  'PDF: nur Schrift auf weißem A4, ohne Textur und ohne Licht. Strg + P.',
+  'Strg + Mausrad zoomt, F11 = Vollbild, Strg + , öffnet die Einstellungen.',
 ].map((r, i) => `<li><span>${String(i + 1).padStart(2, '0')}</span>${r}</li>`).join('');
 
 // LARYNX chain — names, order and texts taken from the app
