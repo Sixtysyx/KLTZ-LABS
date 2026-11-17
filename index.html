@@ -425,8 +425,8 @@ footer p{margin:0 0 6px;max-width:80ch}
       <div class="unit-body">
         <aside class="spec">
           <table>
-            <tr><th>Version</th><td>0.9.1 Beta</td></tr>
-            <tr><th>Größe</th><td>1,1 MB</td></tr>
+            <tr><th>Version</th><td>0.9.2 Beta</td></tr>
+            <tr><th>Größe</th><td>1,2 MB</td></tr>
             <tr><th>System</th><td>Windows 10/11 x64</td></tr>
             <tr><th>Engine</th><td>Nativ C++, DirectX 11</td></tr>
             <tr><th>Seite</th><td>A4, Pica 10 cpi, 62 × 58</td></tr>
@@ -484,7 +484,7 @@ footer p{margin:0 0 6px;max-width:80ch}
         <div class="note"><h3><span class="sq"></span>LARYNX</h3><p>Leitet deine bearbeitete Stimme an Discord, OBS &amp; Co. weiter. In der App führt „Discord einrichten“ durch die Einstellung, mit „Bypass“ hörst du jederzeit den Vorher-Nachher-Vergleich. Ersetzt SixtyVox: Die alte Version wird beim Installieren entfernt, deine Presets ziehen mit um.</p></div>
         <div class="note"><h3><span class="sq"></span>DIGEST</h3><p>Startet mit deinem Downloads-Ordner und zeigt erst nur eine Vorschau. Doppelte Dateien wandern in einen Quarantäne-Ordner, nicht in den Papierkorb. Alles, was DIGEST verschiebt, kannst du unter VERLAUF wieder an den alten Platz holen.</p></div>
         <div class="note"><h3><span class="sq"></span>SUTURE</h3><p>Zieh deine Aufnahmen ins Fenster, eine Datei pro Person oder alles in einer. SUTURE fasst die Originale nie an, es schreibt nur neue Dateien. Der MP3-Encoder LAME liegt als eigene DLL bei.</p></div>
-        <div class="note"><h3><span class="sq"></span>RETINA</h3><p>Die Anschlag-Geräusche erzeugt RETINA selbst. Wenn du eigene Sounds hast, leg sie als WAV in einen Ordner (key…, space…, return…, bell…, backspace…) und wähle ihn in den Einstellungen unter TON. Die Dateien bleiben bei dir, sie werden nicht mitverteilt.</p></div>
+        <div class="note"><h3><span class="sq"></span>RETINA</h3><p>Eigene Tasten-Sounds gehen auch: WAV-Dateien mit press… und release… im Namen (dazu return…, bell…) in einen Ordner legen und unter TON auswählen. Die Dateien bleiben bei dir, sie werden nicht mitverteilt.</p></div>
       </div>
     </div>
   </section>
@@ -494,7 +494,7 @@ footer p{margin:0 0 6px;max-width:80ch}
   <div class="wrap">
     <div>
       <p>KLTZ/LAB · Tools für Windows · Kostenlos</p>
-      <p>Drittanbieter: LibreHardwareMonitor (MPL-2.0), PawnIO, Electron (MIT) in VITALS · RNNoise (BSD-3-Clause), Dear ImGui (MIT), Schriften JetBrains Mono und Doto (SIL OFL 1.1) in LARYNX, DIGEST, SUTURE und RETINA · DejaVu-Pfeile (Bitstream-Vera-Lizenz) in DIGEST, SUTURE und RETINA · LAME (LGPL) in SUTURE · dr_libs (Public Domain/MIT-0) in SUTURE und RETINA · Schreibmaschinen-Schriften Special Elite (Apache 2.0) und Courier Prime (SIL OFL 1.1) in RETINA.</p>
+      <p>Drittanbieter: LibreHardwareMonitor (MPL-2.0), PawnIO, Electron (MIT) in VITALS · RNNoise (BSD-3-Clause), Dear ImGui (MIT), Schriften JetBrains Mono und Doto (SIL OFL 1.1) in LARYNX, DIGEST, SUTURE und RETINA · DejaVu-Pfeile (Bitstream-Vera-Lizenz) in DIGEST, SUTURE und RETINA · LAME (LGPL) in SUTURE · dr_libs (Public Domain/MIT-0) in SUTURE und RETINA · Schreibmaschinen-Schriften Special Elite (Apache 2.0) und Courier Prime (SIL OFL 1.1) sowie Tasten-Sounds von Mixkit (Mixkit-Lizenz) in RETINA.</p>
     </div>
     <div class="label" id="year"></div>
   </div>
@@ -516,8 +516,8 @@ const TOOLS = [
     file: 'DIGEST-0.9-Beta-Setup.exe', size: 1030805, sha256: '9a56ee2790f46e127aef74e416b2a97e042025cbe2cb6cfa01ffe1b2436e005d' },
   { id: 'suture', no: '04', name: 'SUTURE', what: 'Podcast-Schnitt', status: 'beta', version: '0.9.2 Beta', tag: 'suture-v0.9.2',
     file: 'SUTURE-0.9.2-Beta-Setup.exe', size: 1244132, sha256: 'a29ff88eb28217a05b6e52ca58608000bf3cc55d84c771c62a66b7c62292f2f2' },
-  { id: 'retina', no: '05', name: 'RETINA', what: 'Schreibmaschine', status: 'beta', version: '0.9.1 Beta', tag: 'retina-v0.9.1',
-    file: 'RETINA-0.9.1-Beta-Setup.exe', size: 1163652, sha256: 'a86e324f0f607de2d54c52ea3bb3a6b2e8fb0eab72d9a927355ca0aa638ccdac' },
+  { id: 'retina', no: '05', name: 'RETINA', what: 'Schreibmaschine', status: 'beta', version: '0.9.2 Beta', tag: 'retina-v0.9.2',
+    file: 'RETINA-0.9.2-Beta-Setup.exe', size: 1211394, sha256: 'b3225b4280a4018f9738839c7228be18e91d30082160f71858af6739891728d4' },
   { id: null, no: '06', name: 'NÄCHSTES TOOL', what: 'In Arbeit', status: 'wip' },
 ];
 
@@ -633,14 +633,14 @@ $('#rViews').addEventListener('click', e => { const b = e.target.closest('button
   document.querySelectorAll('#rViews button').forEach(x => x.setAttribute('aria-pressed', x === b)); });
 for (const v of Object.keys(R_VIEW)) { const i = new Image(); i.src = `img/retina-${v}.jpg`; }
 $('#retinaSteps').innerHTML = [
-  'Tippen: jede Taste mit eigenem Anschlag, Leertaste, Zeilenschaltung und Glocke kurz vor dem Rand.',
+  'Tippen: Anschlag beim Drücken, Klack beim Loslassen. Gedrückt halten tippt nur einmal, wie bei einer echten Maschine.',
   'Der Wagen fährt: Der Text wandert beim Schreiben nach links, wie bei einer echten Maschine.',
   'Halb modern: Backspace, Entf, Pfeiltasten, Markieren, Kopieren und Strg + Z gehen trotzdem.',
   'Licht: Farbe frei wählbar, vier Helligkeiten, Raum dunkel bis hell. Die Papierstruktur reagiert darauf.',
   'Papier: glatt, Baumwolle, Recycling oder alt, dazu blanko, liniert oder kariert.',
   'Speichern als TXT. RETINA sichert nebenbei automatisch, nichts geht verloren.',
   'PDF: nur Schrift auf weißem A4, ohne Textur und ohne Licht. Strg + P.',
-  'Strg + Mausrad zoomt, F11 = Vollbild, Strg + , öffnet die Einstellungen.',
+  'Glocke kurz vor dem Rand, Wagenrücklauf bei Enter. Strg + Mausrad zoomt, F11 = Vollbild.',
 ].map((r, i) => `<li><span>${String(i + 1).padStart(2, '0')}</span>${r}</li>`).join('');
 
 // LARYNX chain — names, order and texts taken from the app
