@@ -5,10 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>KLTZ/LAB Tools</title>
 <meta name="description" content="KLTZ/LAB – kleine Windows-Tools: VITALS Hardware-Monitor und LARYNX Stimm-Effektkette für Discord. Kostenlos zum Download.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Doto:wght@600;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="preload" href="fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+/* fonts are hosted here, not loaded from Google (no visitor data goes to third parties) */
+@font-face{font-family:'JetBrains Mono';src:url(fonts/jetbrains-mono.woff2) format('woff2');font-weight:400 700;font-display:swap}
+@font-face{font-family:'Doto';src:url(fonts/doto.woff2) format('woff2');font-weight:600 900;font-display:swap}
 /* layout idea: a product-catalogue sheet on a measured grid — every tool is a numbered unit with a spec table, the brand speaks only through the oversized dot-matrix type and one orange */
 :root{
   --paper:#e9e8e3; --panel:#efeee9; --ink:#141414; --muted:#6f6d66; --line:#c9c6be; --accent:#ff5a1f; --accent-ink:#141414;
@@ -494,7 +495,7 @@ footer p{margin:0 0 6px;max-width:80ch}
 <footer>
   <div class="wrap">
     <div>
-      <p>KLTZ/LAB · Tools für Windows · Kostenlos</p>
+      <p>KLTZ/LAB · Tools für Windows · Kostenlos · <a href="impressum.html">Impressum</a></p>
       <p>Drittanbieter: LibreHardwareMonitor (MPL-2.0), PawnIO, Electron (MIT) in VITALS · RNNoise (BSD-3-Clause), Dear ImGui (MIT), Schriften JetBrains Mono und Doto (SIL OFL 1.1) in LARYNX, DIGEST, SUTURE und RETINA · DejaVu-Pfeile (Bitstream-Vera-Lizenz) in DIGEST, SUTURE und RETINA · LAME (LGPL) in SUTURE · dr_libs (Public Domain/MIT-0) in SUTURE und RETINA · Schreibmaschinen-Schriften Special Elite (Apache 2.0) und Courier Prime (SIL OFL 1.1) sowie Tasten-Sounds von Mixkit (Mixkit-Lizenz) in RETINA.</p>
     </div>
     <div class="label" id="year"></div>

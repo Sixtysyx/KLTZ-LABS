@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Impressum · KLTZ/LAB</title>
+<meta name="robots" content="noindex">
+<script>try { const s = localStorage.getItem('kltz-theme'); if (s) document.documentElement.dataset.theme = s; } catch {}</script>
+<style>
+@font-face{font-family:'JetBrains Mono';src:url(fonts/jetbrains-mono.woff2) format('woff2');font-weight:400 700;font-display:swap}
+@font-face{font-family:'Doto';src:url(fonts/doto.woff2) format('woff2');font-weight:600 900;font-display:swap}
+:root{
+  --paper:#e9e8e3; --panel:#efeee9; --ink:#141414; --muted:#6f6d66; --line:#c9c6be; --accent:#ff5a1f;
+  --f-display:'Doto','JetBrains Mono',ui-monospace,monospace;
+  --f-body:'JetBrains Mono',ui-monospace,'Cascadia Mono',Consolas,monospace;
+  --gutter:clamp(16px,3vw,32px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--paper:#111111;--panel:#161616;--ink:#ecebe6;--muted:#8d8b84;--line:#2b2a28;color-scheme:dark}
+}
+:root[data-theme="dark"]{--paper:#111111;--panel:#161616;--ink:#ecebe6;--muted:#8d8b84;--line:#2b2a28;color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:13px;line-height:1.6;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:72px 72px;background-position:-1px -1px}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1280px;margin:0 auto;padding:0 var(--gutter)}
+.top{background:var(--paper);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:24px;height:56px}
+.mark{display:flex;align-items:center;gap:10px;text-decoration:none}
+.mark-face{width:28px;height:28px;border-radius:7px;background:var(--ink);box-shadow:inset 0 0 0 3px var(--accent);display:flex;align-items:center;justify-content:center;gap:5px}
+.mark-face i{width:5px;height:5px;background:var(--paper);border-radius:1px}
+.mark-name{font-weight:700;letter-spacing:.14em}
+.back{margin-left:auto;text-decoration:none;font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:6px 10px;color:var(--muted)}
+.back:hover{color:var(--ink);box-shadow:inset 0 -2px 0 var(--accent)}
+.back span{color:var(--accent);margin-right:6px}
+main{padding:56px 0 80px}
+.label{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:10px}
+.sq{display:inline-block;width:8px;height:8px;background:var(--accent);flex:none}
+h1{margin:14px 0 36px;font-family:var(--f-display);font-weight:900;font-size:clamp(48px,9vw,112px);line-height:.85;letter-spacing:.02em}
+.sheet{background:var(--panel);border:1px solid var(--line);max-width:720px}
+.row{display:grid;grid-template-columns:200px minmax(0,1fr);border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.row h2{margin:0;padding:18px 20px;font-size:11px;font-weight:400;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);border-right:1px solid var(--line)}
+.row div{padding:18px 20px}
+.row p{margin:0 0 10px}
+.row p:last-child{margin:0}
+address{font-style:normal}
+@media (max-width:640px){.row{grid-template-columns:1fr}.row h2{border-right:0;padding-bottom:0}}
+footer{padding:28px 0 40px;font-size:11px;color:var(--muted)}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="./" aria-label="KLTZ/LAB Startseite">
+      <span class="mark-face" aria-hidden="true"><i></i><i></i></span>
+      <span class="mark-name">KLTZ/LAB</span>
+    </a>
+    <a class="back" href="./"><span>←</span>Zurück zu den Tools</a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="label"><span class="sq"></span>Rechtliches</div>
+    <h1>IMPRESSUM</h1>
+    <div class="sheet">
+      <section class="row">
+        <h2>Angaben gemäß § 5 DDG</h2>
+        <div>
+          <address>
+            Phillip Klotz<br>
+            Kierbergstraße 6<br>
+            57250 Netphen<br>
+            Deutschland
+          </address>
+        </div>
+      </section>
+      <section class="row">
+        <h2>Verantwortlich für den Inhalt</h2>
+        <div><p>Phillip Klotz, Anschrift wie oben.</p></div>
+      </section>
+      <section class="row">
+        <h2>Software</h2>
+        <div>
+          <p>Die Tools auf dieser Seite sind kostenlose Beta-Versionen und werden so bereitgestellt, wie sie sind. Bitte sichere wichtige Daten, bevor du sie benutzt.</p>
+          <p>Bestandteile von Drittanbietern und ihre Lizenzen stehen jeweils in der Datei THIRD_PARTY_LICENSES.txt im Installationsordner des Tools.</p>
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">KLTZ/LAB · Tools für Windows · Kostenlos</div>
+</footer>
+</body>
+</html>
